@@ -1,6 +1,6 @@
 # Random-Name-Generator
 
-### Video Demo:  <URL HERE>
+### Video Demo:  (https://youtu.be/u5JaREUvGig)
 
 ### Description:
 This Python script generates a random full name. 
