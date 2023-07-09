@@ -16,7 +16,7 @@ The script works by extracting data for the first name from https://en.wikipedia
 
 The script has a caching system. On first run, it will extract and read the data from the above mentioned websites, and once output is done, create a Pickle file on disk. Additional runs of the script will then no longer extract data from the web, but from the Pickle files. Once the files are over 24 hours old, the next run of the script will run as if there were no Pickle files and extract data from the above mentioned websites, it will then override the old cache Pickle file with a new one.
 
-The script uses a Pickle file to cache the data. I had thought of using a CSV file, however, after researching about the pros and cons of Pickle file format vs CSV I believed the pros outweighed the cons. To recap my research:\n 
+The script uses a Pickle file to cache the data. I had thought of using a CSV file, however, after researching about the pros and cons of Pickle file format vs CSV I believed the pros outweighed the cons. To recap my research:\
 Pros - The pickle format is faster at saving and faster at loading data compared to CSV. Furthermore, Pickle file format requires less disk space than a CSV.
 Cons - Pickle format is stored as a byte stream, which means they are non-human readable and they can be generated via Python programming language only.
 
