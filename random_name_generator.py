@@ -10,45 +10,46 @@ import os.path
 
 
 def main():
-    last_name_df = fetch_names('last-names.pkl')
-    last_name = random.choices(last_name_df['Name'], weights=last_name_df['probability'])[0]
-    last_name = last_name.replace("^\'|\'$", "").capitalize()
-    
-    first_name_df = fetch_names('first-names.pkl')
-    first_name_df['all names'] = first_name_df['all names'].apply(lambda x: x[:].split(', '))
-    
-    country = parser().country
-    gender = parser().gender
+    for i in range(parser().number):
+        last_name_df = fetch_names('last-names.pkl')
+        last_name = random.choices(last_name_df['Name'], weights=last_name_df['probability'])[0]
+        last_name = last_name.replace("^\'|\'$", "").capitalize()
+        
+        first_name_df = fetch_names('first-names.pkl')
+        first_name_df['all names'] = first_name_df['all names'].apply(lambda x: x[:].split(', '))
+        
+        country = parser().country
+        gender = parser().gender
 
-    # If user hasn't selected gener and/or country then randomly assign
-    if gender == 'random':
-        g = random.choice([0, -1])  
-    elif gender == 'male' or gender == 'm':
-        g = 0
-    elif gender == 'female' or gender == 'f':
-        g = -1
-    
-    if country == 'random':
-        country = random.choice(first_name_df.country.values.tolist())
+        # If user hasn't selected gener and/or country then randomly assign
+        if gender == 'random':
+            g = random.choice([0, -1])  
+        elif gender == 'male' or gender == 'm':
+            g = 0
+        elif gender == 'female' or gender == 'f':
+            g = -1
+        
+        if country == 'random':
+            country = random.choice(first_name_df.country.values.tolist())
 
-    first_name_df = first_name_df.query(f"country == @country")
-    
-    try:
-        first_names = first_name_df['all names'].iloc[g]
-    except:
-        sys.exit('Invalid country')
-    
-    first_name = random.choice(first_names)
-    
-    # deal with 'nan' names
-    tries = 0
-    while first_name == 'nan' or tries == 20:
+        first_name_df = first_name_df.query(f"country == @country")
+        
+        try:
+            first_names = first_name_df['all names'].iloc[g]
+        except:
+            sys.exit('Invalid country')
+        
         first_name = random.choice(first_names)
-        tries += 1
- 
-    print(first_name, last_name)
+        
+        # deal with 'nan' names
+        tries = 0
+        while first_name == 'nan' or tries == 20:
+            first_name = random.choice(first_names)
+            tries += 1
+    
+        print(first_name, last_name)
 
-    # print('My program took', time.time() - start_time, "to run")
+        # print('My program took', time.time() - start_time, "to run")
 
 def parser():
     """
@@ -64,6 +65,10 @@ def parser():
     parser.add_argument('--gender', '-g', default='random',
                         choices=['male', 'm', 'female', 'f', 'random'],
                         help='select gender of random name')
+    
+    parser.add_argument('--number', '-n', default=1,
+                        type=int,
+                        help='the number of random names to be printed')
 
     args = parser.parse_args()
 
